@@ -1,16 +1,11 @@
 # ui_challange_banking_app
 
-A new Flutter project.
+From a nice design to a Flutter app (not functional, just front end)
 
-## Getting Started
+- This is the [Original design](https://dribbble.com/shots/11914599-Another-banking-app)
+- Inspired by [This video](https://www.youtube.com/watch?v=90IZwTjoPUI&t=2937s) from NoScopeDevs
+- [Elian Ortega repo](https://github.com/elianmortega/ui-design-challenge)
+- [Marcos Sevilla repo](https://github.com/marcossevilla/ui-challenges)
 
-This project is a starting point for a Flutter application.
+... in progress
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
