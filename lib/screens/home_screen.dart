@@ -17,11 +17,50 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             children: [
               _Header(),
-              Text('hola'),
+              Expanded(
+                child: Container(
+                  margin: EdgeInsets.only(top: 30),
+                  padding: EdgeInsets.only(top: 30),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(20),
+                    ),
+                  ),
+                  child: DefaultTabController(
+                      initialIndex: 1,
+                      length: HomeScreenConstants.tabNames.length,
+                      child: Column(
+                        children: [
+                          TabBar(tabs: [
+                            GraphTab(title: 'day'),
+                            GraphTab(title: 'week'),
+                            GraphTab(title: 'month'),
+                            GraphTab(title: 'year'),
+                          ])
+                        ],
+                      )),
+                ),
+              ),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class GraphTab extends StatelessWidget {
+  final String title;
+  const GraphTab({Key? key, required this.title}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+      ),
+      child: Text(title, style: TextStyle(color: Colors.black)),
     );
   }
 }
@@ -69,16 +108,28 @@ class _Header extends StatelessWidget {
           SizedBox(
             height: 40,
           ),
-          MainTabs(),
+          MainTabs(
+            spendings: true,
+          ),
         ],
       ),
     );
   }
 }
 
-class MainTabs extends StatelessWidget {
-  const MainTabs({Key? key}) : super(key: key);
+// ignore: must_be_immutable
+class MainTabs extends StatefulWidget {
+  bool spendings;
+  MainTabs({
+    Key? key,
+    required this.spendings,
+  }) : super(key: key);
 
+  @override
+  _MainTabsState createState() => _MainTabsState();
+}
+
+class _MainTabsState extends State<MainTabs> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -90,73 +141,78 @@ class MainTabs extends StatelessWidget {
           color: AppColors.lightPink,
           borderRadius: BorderRadius.circular(20),
         ),
-        child: Stack(
-          children: [
-            Positioned(
-              left: 0,
-              child: MainTab(
-                selected: true,
-                title: 'Spendings',
-                amount: '\$995.45',
+        child: InkWell(
+          borderRadius: BorderRadius.circular(20),
+          onTap: () {
+            setState(() {
+              widget.spendings = !widget.spendings;
+            });
+          },
+          child: Stack(
+            children: [
+              Positioned(
+                left: 0,
+                child: MainTab(
+                  selected: widget.spendings,
+                  title: 'Spendings',
+                  amount: '\$995.45',
+                ),
               ),
-            ),
-            Positioned(
-              right: 0,
-              child: MainTab(
-                selected: false,
-                title: 'Income',
-                amount: '\$1995.45',
+              Positioned(
+                right: 0,
+                child: MainTab(
+                  selected: !widget.spendings,
+                  title: 'Income',
+                  amount: '\$1995.45',
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ));
   }
 }
 
-class MainTab extends StatefulWidget {
-  final bool selected;
+class MainTab extends StatelessWidget {
+  bool selected;
   final String title;
   final String amount;
-  const MainTab({
+  MainTab({
     Key? key,
     required this.selected,
     required this.title,
     required this.amount,
   }) : super(key: key);
 
-  @override
-  _MainTabState createState() => _MainTabState();
-}
-
-class _MainTabState extends State<MainTab> {
-  @override
   Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(20),
-      onTap: () {},
-      child: Container(
-        height: 80,
-        width: 170,
-        decoration: BoxDecoration(
-          color: widget.selected ? AppColors.purple : AppColors.lightPink,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              widget.title,
-              style: HomeScreenConstants.styleLittleText,
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            Text(
-              widget.amount,
-              style: HomeScreenConstants.styleMediumText,
-            ),
-          ],
-        ),
+    return Container(
+      height: 80,
+      width: 170,
+      decoration: BoxDecoration(
+        color: selected ? AppColors.purple : AppColors.lightPink,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            title,
+            style: selected
+                ? HomeScreenConstants.styleLittleText
+                : HomeScreenConstants.styleLittleText.copyWith(
+                    color: Color(0xAAFFFFFF),
+                  ),
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Text(
+            amount,
+            style: selected
+                ? HomeScreenConstants.styleMediumText
+                : HomeScreenConstants.styleMediumText
+                    .copyWith(color: Color(0xAAFFFFFF)),
+          ),
+        ],
       ),
     );
   }
