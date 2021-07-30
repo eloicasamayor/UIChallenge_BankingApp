@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ui_challange_banking_app/constants.dart';
+import 'package:dotted_border/dotted_border.dart';
+import '../screens/card_detail_screen.dart';
+import '../widgets/bank_card.dart';
 
 class HomeScreen extends StatelessWidget {
   static const routeName = '/home_screen';
@@ -11,37 +14,151 @@ class HomeScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: AppColors.pink,
         body: SafeArea(
-          minimum: const EdgeInsets.all(0.0),
-          top: true,
+          //minimum: const EdgeInsets.all(0.0),
           bottom: false,
-          child: Column(
-            children: [
-              _Header(),
-              Expanded(
-                child: Container(
-                  margin: EdgeInsets.only(top: 30),
-                  padding: EdgeInsets.only(top: 30),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(20),
+          child: SingleChildScrollView(
+            child: Container(
+              height: 750,
+              child: Column(
+                children: [
+                  _Header(),
+                  Expanded(
+                    child: Container(
+                      margin: EdgeInsets.only(top: 30),
+                      padding: EdgeInsets.only(top: 30),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(20),
+                        ),
+                      ),
+                      child: DefaultTabController(
+                        initialIndex: 1,
+                        length: HomeScreenConstants.tabNames.length,
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: TabBar(
+                                //labelPadding: EdgeInsets.all(0),
+                                unselectedLabelColor: AppColors.purple,
+                                indicatorSize: TabBarIndicatorSize.label,
+                                indicator: BoxDecoration(
+                                  color: AppColors.purple,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                tabs: [
+                                  for (var tab in HomeScreenConstants.tabNames)
+                                    Tab(
+                                      child: Align(
+                                        alignment: Alignment.center,
+                                        child: Text(tab),
+                                      ),
+                                    )
+                                ],
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.symmetric(horizontal: 10),
+                              height: 200,
+                              child: TabBarView(
+                                children: [
+                                  Container(),
+                                  Container(
+                                    child: WeekGraph(),
+                                  ),
+                                  Container(),
+                                  Container(),
+                                ],
+                              ),
+                            ),
+                            _RadioButtons(),
+                            _Cards(),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
-                  child: DefaultTabController(
-                      initialIndex: 1,
-                      length: HomeScreenConstants.tabNames.length,
-                      child: Column(
-                        children: [
-                          TabBar(tabs: [
-                            GraphTab(title: 'day'),
-                            GraphTab(title: 'week'),
-                            GraphTab(title: 'month'),
-                            GraphTab(title: 'year'),
-                          ])
-                        ],
-                      )),
-                ),
+                ],
               ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _Cards extends StatelessWidget {
+  const _Cards({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 160,
+      child: ListView(
+        shrinkWrap: true,
+        scrollDirection: Axis.horizontal,
+        children: [
+          Hero(
+            tag: 'card',
+            child: InkWell(
+              onTap: () =>
+                  Navigator.of(context).pushNamed(CardDetailScreen.routeName),
+              child: BankCard(),
+            ),
+          ),
+          _NewBankCard()
+        ],
+      ),
+    );
+  }
+}
+
+class _NewBankCard extends StatelessWidget {
+  const _NewBankCard({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 2, vertical: 20),
+      child: DottedBorder(
+        dashPattern: [4, 4],
+        color: AppColors.lightBlue,
+        strokeWidth: 2,
+        borderType: BorderType.RRect,
+        radius: Radius.circular(20.0),
+        child: Container(
+          //height: 100,
+          width: 150,
+          margin: EdgeInsets.all(20),
+          /* padding: EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 10,
+          ), */
+          decoration: BoxDecoration(
+            //color: AppColors.purple,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.add_rounded,
+                size: 45,
+                color: AppColors.lightBlue,
+              ),
+              SizedBox(
+                height: 2,
+              ),
+              Text(
+                'Add',
+                style: HomeScreenConstants.styleLittleText.copyWith(
+                  fontSize: 16,
+                  color: AppColors.lightBlue,
+                ),
+              )
             ],
           ),
         ),
@@ -50,17 +167,103 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
-class GraphTab extends StatelessWidget {
-  final String title;
-  const GraphTab({Key? key, required this.title}) : super(key: key);
+class _RadioButtons extends StatelessWidget {
+  final _radio = ValueNotifier<int>(0);
+  _handleRadioValueChange(int value) => _radio.value = value;
+
+  @override
+  Widget build(BuildContext context) {
+    return ValueListenableBuilder(
+      valueListenable: _radio,
+      builder: (context, int value, _) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Radio(
+              value: 0,
+              groupValue: value,
+              activeColor: AppColors.purple,
+              onChanged: (i) => _handleRadioValueChange(0),
+            ),
+            Text(
+              'Average',
+              style: HomeScreenConstants.styleLittleText
+                  .copyWith(color: AppColors.lightBlue),
+            ),
+            Radio(
+              value: 1,
+              groupValue: value,
+              activeColor: AppColors.purple,
+              onChanged: (i) => _handleRadioValueChange(1),
+            ),
+            Text(
+              'This Week',
+              style: HomeScreenConstants.styleLittleText
+                  .copyWith(color: AppColors.lightBlue),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class WeekGraph extends StatelessWidget {
+  const WeekGraph({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(20)),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          for (var i = 0; i < HomeScreenConstants.weekDayLabels.length; i++)
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Container(
+                      width: 10,
+                      height:
+                          HomeScreenConstants.weekDaySpending[i].toDouble() / 6,
+                      decoration: BoxDecoration(
+                          color: AppColors.lightGrey,
+                          borderRadius: BorderRadius.circular(5)),
+                    ),
+                    SizedBox(
+                      width: 2,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                          color: HomeScreenConstants.weekDayLabels[i] != 'W'
+                              ? AppColors.purple
+                              : AppColors.pink,
+                          borderRadius: BorderRadius.circular(5)),
+                      width: 10,
+                      height:
+                          HomeScreenConstants.weekDayIncome[i].toDouble() / 6,
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                Text(
+                  HomeScreenConstants.weekDayLabels[i],
+                  style: TextStyle(
+                    color: HomeScreenConstants.weekDayLabels[i] != 'W'
+                        ? AppColors.lightBlue
+                        : AppColors.pink,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+            )
+        ],
       ),
-      child: Text(title, style: TextStyle(color: Colors.black)),
     );
   }
 }
@@ -92,21 +295,21 @@ class _Header extends StatelessWidget {
             ],
           ),
           SizedBox(
-            height: 10,
+            height: 6,
           ),
           Text(
             'Total Balance',
             style: HomeScreenConstants.styleLittleText,
           ),
           SizedBox(
-            height: 5,
+            height: 2,
           ),
           Text(
             '\$995.58',
             style: HomeScreenConstants.styleBigText,
           ),
           SizedBox(
-            height: 40,
+            height: 30,
           ),
           MainTabs(
             spendings: true,
@@ -133,9 +336,9 @@ class _MainTabsState extends State<MainTabs> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 80,
+        height: 70,
         margin: EdgeInsets.symmetric(
-          horizontal: 20,
+          horizontal: MediaQuery.of(context).size.width / 16,
         ),
         decoration: BoxDecoration(
           color: AppColors.lightPink,
@@ -185,8 +388,9 @@ class MainTab extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return Container(
-      height: 80,
-      width: 170,
+      height: 70,
+      width: MediaQuery.of(context).size.width / 2 -
+          MediaQuery.of(context).size.width / 12,
       decoration: BoxDecoration(
         color: selected ? AppColors.purple : AppColors.lightPink,
         borderRadius: BorderRadius.circular(20),

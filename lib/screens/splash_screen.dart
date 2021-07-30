@@ -8,75 +8,73 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: Container(
+    return Scaffold(
+      body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         color: Colors.white,
         child: CustomPaint(
           painter: _SplashScreenPainter(),
-          child: SafeArea(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Spacer(),
-                Image.asset('assets/images/splash_screen_img.png'),
-                SizedBox(
-                  height: 60,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Spacer(),
+              Image.asset('assets/images/splash_screen_img.png'),
+              SizedBox(
+                height: 60,
+              ),
+              Container(
+                width: 280,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Stay Secure',
+                      style: styleBigText,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non neque nulla.',
+                      style: styleLittleText,
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Indicators(),
+                  ],
                 ),
-                Container(
-                  width: 280,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Stay Secure',
-                        style: styleBigText,
+              ),
+              Spacer(),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: 16,
+                  horizontal: 28,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pushNamed(
+                        HomeScreen.routeName,
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non neque nulla.',
+                      child: Text(
+                        'Skip',
                         style: styleLittleText,
                       ),
-                      SizedBox(
-                        height: 20,
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        color: Colors.white,
                       ),
-                      Indicators(),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                Spacer(),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 16,
-                    horizontal: 28,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      TextButton(
-                        onPressed: () => Navigator.of(context).pushNamed(
-                          HomeScreen.routeName,
-                        ),
-                        child: Text(
-                          'Skip',
-                          style: styleLittleText,
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.arrow_forward_ios_rounded,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
+              )
+            ],
           ),
         ),
       ),
