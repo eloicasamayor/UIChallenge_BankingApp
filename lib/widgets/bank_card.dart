@@ -21,10 +21,11 @@ class BankCard extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Image.asset(
             'assets/images/visa_logo.png',
-            width: 38,
+            width: 45,
             fit: BoxFit.cover,
           ),
           SizedBox(
@@ -33,9 +34,12 @@ class BankCard extends StatelessWidget {
           Text(
             '1456  5878  2695  0320',
             style: HomeScreenConstants.styleLittleText.copyWith(
-              fontSize: 16,
+              fontSize: 14,
             ),
-          )
+          ),
+          SizedBox(
+            height: 10,
+          ),
         ],
       ),
     );

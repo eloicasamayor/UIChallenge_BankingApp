@@ -41,6 +41,24 @@ class HomeScreenConstants {
 }
 
 class DetailScreenConstants {
+  static const styleBlueLittleText = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+    color: AppColors.lightBlue,
+    letterSpacing: -0.8,
+  );
+  static const stylePurpleBigText = TextStyle(
+    fontSize: 24,
+    fontWeight: FontWeight.w700,
+    letterSpacing: -1.4,
+    color: AppColors.purple,
+  );
+  static const stylePinkMediumText = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
+    color: AppColors.purple,
+  );
+
   static const transactions = [
     const Transaction(
       title: 'Netflix Subscription',
