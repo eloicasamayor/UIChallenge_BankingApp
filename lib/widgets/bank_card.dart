@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../constants.dart';
-import '../screens/card_detail_screen.dart';
 
 class BankCard extends StatelessWidget {
   const BankCard({Key? key}) : super(key: key);
@@ -18,6 +17,14 @@ class BankCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.purple,
         borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            spreadRadius: 4,
+            blurRadius: 6,
+            offset: Offset(5, 5), // changes position of shadow
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

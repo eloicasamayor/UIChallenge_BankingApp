@@ -10,7 +10,7 @@ class AppColors {
   static const lightPink = Color(0XFFf0487b);
 
   static const lightBlue = Color(0XFF5ad3e1);
-  static const lightGrey = Color(0XFFf1f1f1);
+  static const lightGrey = Color(0XFFf7f7f7);
 }
 
 class HomeScreenConstants {
@@ -48,7 +48,7 @@ class DetailScreenConstants {
     letterSpacing: -0.8,
   );
   static const stylePurpleBigText = TextStyle(
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: FontWeight.w700,
     letterSpacing: -1.4,
     color: AppColors.purple,
@@ -56,16 +56,15 @@ class DetailScreenConstants {
   static const stylePinkMediumText = TextStyle(
     fontSize: 16,
     fontWeight: FontWeight.w500,
-    color: AppColors.purple,
+    color: AppColors.pink,
   );
 
   static const transactions = [
     const Transaction(
-      title: 'Netflix Subscription',
-      date: '11/11/2020 20:35',
-      amount: 10.00,
-      icon: FontAwesomeIcons.napster,
-    ),
+        title: 'Netflix Subscription',
+        date: '11/11/2020 20:35',
+        amount: 10.00,
+        icon: FontAwesomeIcons.napster),
     const Transaction(
       title: 'Dribbble Pro Account',
       date: '11/11/2020 20:35',
