@@ -17,34 +17,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'UI Challange: Banking App'),
+      home: SplashScreen(),
       routes: {
         SplashScreen.routeName: (context) => SplashScreen(),
         HomeScreen.routeName: (context) => HomeScreen(),
         CardDetailScreen.routeName: (context) => CardDetailScreen(),
       },
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  MyHomePage({
-    Key? key,
-    required this.title,
-  }) : super(key: key);
-  final String title;
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
-      body: Center(
-        child: ElevatedButton(
-            onPressed: () =>
-                Navigator.of(context).pushNamed(SplashScreen.routeName),
-            child: Text('start the app')),
-      ),
     );
   }
 }

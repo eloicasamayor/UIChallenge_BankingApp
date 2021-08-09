@@ -11,75 +11,79 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
       child: Scaffold(
         backgroundColor: AppColors.pink,
-        body: SafeArea(
-          //minimum: const EdgeInsets.all(0.0),
-          bottom: false,
-          child: SingleChildScrollView(
-            child: Container(
-              height: 760,
-              child: Column(
-                children: [
-                  _Header(),
-                  Expanded(
-                    child: Container(
-                      margin: EdgeInsets.only(top: 30),
-                      padding: EdgeInsets.only(top: 30),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(20),
+        body: CustomPaint(
+          painter: _HomeScreenPainter(),
+          child: SafeArea(
+            child: SingleChildScrollView(
+              child: Container(
+                height: MediaQuery.of(context).size.height,
+                child: Column(
+                  children: [
+                    _Header(),
+                    Expanded(
+                      child: Container(
+                        margin: EdgeInsets.only(top: 30),
+                        padding: EdgeInsets.only(top: 30),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(20),
+                          ),
                         ),
-                      ),
-                      child: DefaultTabController(
-                        initialIndex: 1,
-                        length: HomeScreenConstants.tabNames.length,
-                        child: Column(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.symmetric(horizontal: 20),
-                              child: TabBar(
-                                //labelPadding: EdgeInsets.all(0),
-                                unselectedLabelColor: AppColors.purple,
-                                indicatorSize: TabBarIndicatorSize.label,
-                                indicator: BoxDecoration(
-                                  color: AppColors.purple,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                tabs: [
-                                  for (var tab in HomeScreenConstants.tabNames)
-                                    Tab(
-                                      child: Align(
-                                        alignment: Alignment.center,
-                                        child: Text(tab),
-                                      ),
-                                    )
-                                ],
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.symmetric(horizontal: 10),
-                              height: 200,
-                              child: TabBarView(
-                                children: [
-                                  Container(),
-                                  Container(
-                                    child: WeekGraph(),
+                        child: DefaultTabController(
+                          initialIndex: 1,
+                          length: HomeScreenConstants.tabNames.length,
+                          child: Column(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.symmetric(horizontal: 20),
+                                child: TabBar(
+                                  //labelPadding: EdgeInsets.all(0),
+                                  unselectedLabelColor: AppColors.purple,
+                                  indicatorSize: TabBarIndicatorSize.label,
+                                  indicator: BoxDecoration(
+                                    color: AppColors.purple,
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
-                                  Container(),
-                                  Container(),
-                                ],
+                                  tabs: [
+                                    for (var tab
+                                        in HomeScreenConstants.tabNames)
+                                      Tab(
+                                        child: Align(
+                                          alignment: Alignment.center,
+                                          child: Text(tab),
+                                        ),
+                                      )
+                                  ],
+                                ),
                               ),
-                            ),
-                            _RadioButtons(),
-                            _Cards(),
-                          ],
+                              Container(
+                                padding: EdgeInsets.symmetric(horizontal: 10),
+                                height: 200,
+                                child: TabBarView(
+                                  children: [
+                                    Container(),
+                                    Container(
+                                      child: WeekGraph(),
+                                    ),
+                                    Container(),
+                                    Container(),
+                                  ],
+                                ),
+                              ),
+                              _RadioButtons(),
+                              _Cards(),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
@@ -420,4 +424,52 @@ class MainTab extends StatelessWidget {
       ),
     );
   }
+}
+
+class _HomeScreenPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    var height = size.height;
+    var width = size.width;
+
+    Paint purplePaint = Paint()
+      ..color = AppColors.purple
+      ..style = PaintingStyle.fill;
+
+    Paint pinkPaint = Paint()
+      ..color = AppColors.pink
+      ..style = PaintingStyle.fill;
+
+    Path purpleTopPath = Path()
+      ..lineTo(0, 120)
+      ..quadraticBezierTo(80, 100, 160, 0);
+
+    Path pinkTopPath = Path()
+      ..lineTo(0, 180)
+      ..quadraticBezierTo(60, 90, 180, 65)
+      ..quadraticBezierTo(260, 50, 280, 0);
+
+    Path purpleBottomPath = Path()
+      ..moveTo(width - 300, height)
+      ..quadraticBezierTo(width - 280, height - 90, width - 120, height - 110)
+      ..quadraticBezierTo(width - 30, height - 128, width, height - 130)
+      ..lineTo(width, height);
+
+    Path pinkBottomPath = Path()
+      ..moveTo(width - 180, height)
+      ..quadraticBezierTo(width - 165, height - 60, width - 90, height - 90)
+      ..quadraticBezierTo(width - 30, height - 105, width, height - 90)
+      ..lineTo(width, height);
+
+    canvas.drawPath(pinkTopPath, purplePaint);
+    canvas.drawPath(purpleTopPath, pinkPaint);
+    //canvas.drawPath(purpleBottomPath, purplePaint);
+    //canvas.drawPath(pinkBottomPath, pinkPaint);
+  }
+
+  @override
+  bool shouldRepaint(_HomeScreenPainter oldDelegate) => false;
+
+  @override
+  bool shouldRebuildSemantics(_HomeScreenPainter oldDelegate) => false;
 }

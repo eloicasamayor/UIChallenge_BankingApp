@@ -34,7 +34,7 @@ class CardDetailScreen extends StatelessWidget {
         alignment: Alignment.center,
         children: [
           Positioned(
-            height: MediaQuery.of(context).size.height * 0.7,
+            height: MediaQuery.of(context).size.height * 0.75,
             width: MediaQuery.of(context).size.width,
             //top: MediaQuery.of(context).size.height * 0.1,
             top: 80,
