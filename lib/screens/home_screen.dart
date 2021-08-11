@@ -449,18 +449,6 @@ class _HomeScreenPainter extends CustomPainter {
       ..quadraticBezierTo(60, 90, 180, 65)
       ..quadraticBezierTo(260, 50, 280, 0);
 
-    Path purpleBottomPath = Path()
-      ..moveTo(width - 300, height)
-      ..quadraticBezierTo(width - 280, height - 90, width - 120, height - 110)
-      ..quadraticBezierTo(width - 30, height - 128, width, height - 130)
-      ..lineTo(width, height);
-
-    Path pinkBottomPath = Path()
-      ..moveTo(width - 180, height)
-      ..quadraticBezierTo(width - 165, height - 60, width - 90, height - 90)
-      ..quadraticBezierTo(width - 30, height - 105, width, height - 90)
-      ..lineTo(width, height);
-
     canvas.drawPath(pinkTopPath, purplePaint);
     canvas.drawPath(purpleTopPath, pinkPaint);
     //canvas.drawPath(purpleBottomPath, purplePaint);

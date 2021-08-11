@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:ui_challange_banking_app/screens/onboarding_screen.dart';
 import '../screens/home_screen.dart';
-import '../screens/splash_screen.dart';
+import '../screens/onboarding_screen.dart';
 import '../screens/card_detail_screen.dart';
 
 void main() {
@@ -17,9 +18,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: SplashScreen(),
+      home: OnBoardingPage(),
       routes: {
-        SplashScreen.routeName: (context) => SplashScreen(),
+        //OnBoardingPage.routeName: (context) => OnBoardingPage(),
         HomeScreen.routeName: (context) => HomeScreen(),
         CardDetailScreen.routeName: (context) => CardDetailScreen(),
       },
